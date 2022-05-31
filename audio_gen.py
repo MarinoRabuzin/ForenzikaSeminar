@@ -1,5 +1,3 @@
-#Importing Libraries
-from PIL import Image, ImageDraw, ImageFont
 import math
 import numpy as np
 import soundfile as sf
@@ -7,7 +5,6 @@ from pydub import AudioSegment
 from gtts import gTTS
 import os
 import random
-
 
 def generate_codes(jmbags):
     jmbag_code_dir = {}
@@ -38,30 +35,6 @@ def generate_folder(dir):
 
 
 def generate_watermarks(key, value):
-    #Opening Image & Creating New Text Layer
-    img = Image.open('slika.jpg').convert("RGBA")
-    txt = Image.new('RGBA', img.size, (255,255,255,0))
-
-    #Creating Text
-    text = value
-    font = ImageFont.truetype("arial.ttf", 82)
-
-    #Creating Draw Object
-    d = ImageDraw.Draw(txt)
-
-    #Positioning Text
-    width, height = img.size
-    textwidth, textheight = d.textsize(text, font)
-    x=width/2-textwidth/2
-    y=height-textheight-300
-
-    #Applying Text
-    d.text((x,y+100), text, fill=(0,0,0,6), font=font)
-
-    #Combining Original Image with Text and Saving
-    watermarked = Image.alpha_composite(img, txt)
-    watermarked.save(f'./JMBAGS/{key}/watermarked.png')
-
     value = value[-3] + ", " + value[-2] + ", " + value[-1]
     language = "en"
     audio = gTTS(text=value, lang=language, slow=False)
